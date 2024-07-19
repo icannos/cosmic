@@ -22,14 +22,23 @@ def embedd_sourcetexts_and_summaries(
 
 
 class CosmicScorer:
-    def __init__(self, embedding_model: str):
+    def __init__(
+        self,
+        embedding_model: str = "sentence-transformers/paraphrase-MiniLM-L6-v2",
+        device: str = "cpu",
+        batch_size: int = 32,
+        knife_args_dict=None,
+    ):
 
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = device
+        self.batch_size = batch_size
 
         self.embedding_model = embedding_model
         self.model = SentenceTransformer(self.embedding_model)
 
-        self.knife_args = KNIFEArgs(device=self.device)
+        self.knife_args = KNIFEArgs(
+            device=self.device, batch_size=self.batch_size, **knife_args_dict
+        )
 
     def __call__(self, *args, **kwargs):
         return self.score(*args, **kwargs)

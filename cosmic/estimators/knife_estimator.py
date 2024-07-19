@@ -23,7 +23,7 @@ class KNIFEArgs:
 
     average: str = "var"
     cov_diagonal: str = "var"
-    cov_off_diagonal: str = "var"
+    cov_off_diagonal: str = ""
     optimize_mu: bool = False
     simu_params: List[str] = field(
         default_factory=lambda: [
